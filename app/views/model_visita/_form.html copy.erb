@@ -1,0 +1,56 @@
+<%= form_with(model: model_visitum, local: true) do |form| %>
+  <% if model_visitum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(model_visitum.errors.count, "error") %> prohibited this model_visitum from being saved:</h2>
+
+      <ul>
+      <% model_visitum.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label (@user.nombre) %>
+    <%= form.hidden_field :id_usuario, :value => @user.id %>
+  </div>
+  <div class="field">
+    <%= form.label 'Lugar' %><br />
+     <%= form.collection_select :id_lugar, @user.lugars ,:id,:nombre, include_blank: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :costo_avion %>
+    <%= form.text_field :costo_avion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :costo_hotel %>
+    <%= form.text_field :costo_hotel %>
+  </div>
+
+  <div class="field">
+    <%= form.label :costo_transporte %>
+    <%= form.text_field :costo_transporte %>
+  </div>
+
+  <div class="field">
+    <%= form.label :costo_comidas %>
+    <%= form.text_field :costo_comidas %>
+  </div>
+
+  <div class="field">
+    <%= form.label :costo_gastos %>
+    <%= form.text_field :costo_gastos %>
+  </div>
+
+  <div class="field">
+    <%= form.label :datetravel%>
+    <%= form.date_field :datetravel%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

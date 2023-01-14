@@ -1,0 +1,37 @@
+<%= form_with(model: lugar, local: true) do |form| %>
+  <% if lugar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(lugar.errors.count, "error") %> prohibited this lugar from being saved:</h2>
+
+      <ul>
+      <% lugar.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  </p>
+<% if lugar.image_place.attached? %>
+    <%= image_tag lugar.image_place.variant(resize: "200x200!") , class: 'user-avatar' %>
+<% end %>
+<div class="field">
+  
+    <%= form.label 'Image' %><br />
+     <%= form.file_field :image_place%>
+</div>
+ <div class="field">
+    <%= form.label 'Country' %><br />
+     <%= form.collection_select :id_pais, Country.order(:id),:id,:name, include_blank: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nombre %>
+    <%= form.text_field :nombre %>
+  </div>
+  <div class="field">
+    <%= form.hidden_field :id_usuario, :value => @user.id %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

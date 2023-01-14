@@ -1,0 +1,2 @@
+class Ahorro < ApplicationRecord
+end

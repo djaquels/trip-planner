@@ -1,0 +1,106 @@
+<h1>Dashboard: <%= @viaje.lugar.nombre %> </h1>
+<p>Here you can administrate your trip status.</p>
+<div class="col-4 col-6-medium col-12-small"> 
+<h2> Budget Distribution </h2>
+<canvas id="budget" width="200" height="200"></canvas>
+</div>
+<div class="col-4 col-6-medium col-12-small"> 
+<h2> Success Time Line </h2>
+<canvas id="timeline" width="200" height="200"></canvas>
+</div>
+<div class="col-4 col-6-medium col-12-small"> 
+<h2> Make A Deposit </h2>
+<h3> The suggested monthly payment to finance your trip is: <%= @mensualidad.round(2)%>
+<% if !@user.currency.nil? %>
+  <%= @currency[0].currency %>
+<% end %>
+ </h3>
+<%= form_with(model: @ahorro, local: true) do |form| %>
+  <% if @ahorro.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ahorro.errors.count, "error") %> prohibited this ahorro from being saved:</h2>
+
+      <ul>
+      <% @ahorro.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= form.label "Date" %>
+    <%= form.select :fecha_deposito, options_for_select(@meses.each_with_index {|mes,index| ["#{index}.- #{mes}",mes]} ) %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Amount"%>
+    <%= form.text_field :cantidad %>
+  </div>
+  <div class="field">
+    <%= form.hidden_field :id_viaje, :value => @viaje.id %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Save Deposito"%>
+  </div>
+<% end %>
+
+</div>
+<script>
+var ctx = document.getElementById('budget').getContext('2d');
+var myRadarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+    labels: <%= raw @categorias%>,
+    datasets: [{
+        label: "Budget",
+        "fill":true,
+        "backgroundColor":"rgba(255, 99, 132, 0.2)",
+        "borderColor":"#B74F6F",
+        "pointBackgroundColor":"#B74F6F",
+        "pointBorderColor":"#fff",
+        "pointHoverBackgroundColor":"#fff",
+        "pointHoverBorderColor":"#B74F6F",
+        "pointRadius": 7,
+        "pointHoverRadius": 7,
+        data: <%= raw @values %>,
+    }]}
+});
+</script>
+<script>
+var ctx = document.getElementById('timeline').getContext('2d');
+var myRadarChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+    labels: <%= raw @dataset.keys.map {|mes| mes.to_s.sub(',','-')}%>,
+    datasets: [{
+        label: " Time Line Saves",
+        "fill":true,
+        "backgroundColor":"rgba(0,0,0,0.0)",
+        "borderColor":"#A3A380",
+        "pointBackgroundColor":"#A3A380",
+        "pointBorderColor":"#fff",
+        "pointHoverBackgroundColor":"#fff",
+        "pointHoverBorderColor":"#49FCD4",
+        "pointRadius": 7,
+        "pointHoverRadius": 7,
+        showLine: true,
+        data: <%= raw @dataset_ahorro.values %>,
+    },{
+    label: " Ideal Saves",
+        "fill":true,
+        "backgroundColor":"rgba(0,0,0,0.0)",
+        "opacity" : "1",
+        "borderColor":"#B74F6F",
+        "pointBackgroundColor":"#B74F6F",
+        "pointBorderColor":"#fff",
+        "pointHoverBackgroundColor":"#fff",
+        "pointHoverBorderColor":"#B74F6F",
+        "pointRadius": 7,
+        "pointHoverRadius": 7,
+        data: <%= raw @dataset.values %>,
+    },
+    ]}
+});
+</script>

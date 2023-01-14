@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Id usuario:</strong>
+  <%= @model_visitum.id_usuario %>
+</p>
+
+<p>
+  <strong>Id lugar:</strong>
+  <%= @model_visitum.id_lugar %>
+</p>
+
+<p>
+  <strong>Costo avion:</strong>
+  <%= @model_visitum.costo_avion %>
+</p>
+
+<p>
+  <strong>Costo hotel:</strong>
+  <%= @model_visitum.costo_hotel %>
+</p>
+
+<p>
+  <strong>Costo transporte:</strong>
+  <%= @model_visitum.costo_transporte %>
+</p>
+
+<p>
+  <strong>Costo comidas:</strong>
+  <%= @model_visitum.costo_comidas %>
+</p>
+
+<p>
+  <strong>Costo gastos:</strong>
+  <%= @model_visitum.costo_gastos %>
+</p>
+
+<%= link_to 'Edit', edit_model_visitum_path(@model_visitum) %> |
+<%= link_to 'Back', model_visita_path %>

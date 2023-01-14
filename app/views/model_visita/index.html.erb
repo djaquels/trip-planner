@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Model Visita</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id usuario</th>
+      <th>Id lugar</th>
+      <th>Costo avion</th>
+      <th>Costo hotel</th>
+      <th>Costo transporte</th>
+      <th>Costo comidas</th>
+      <th>Costo gastos</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @model_visita.each do |model_visitum| %>
+      <tr>
+        <td><%= model_visitum.id_usuario %></td>
+        <td><%= model_visitum.id_lugar %></td>
+        <td><%= model_visitum.costo_avion %></td>
+        <td><%= model_visitum.costo_hotel %></td>
+        <td><%= model_visitum.costo_transporte %></td>
+        <td><%= model_visitum.costo_comidas %></td>
+        <td><%= model_visitum.costo_gastos %></td>
+        <td><%= link_to 'Show', model_visitum %></td>
+        <td><%= link_to 'Edit', edit_model_visitum_path(model_visitum) %></td>
+        <td><%= link_to 'Destroy', model_visitum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Model Visitum', new_model_visitum_path %>

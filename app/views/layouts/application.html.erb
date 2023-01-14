@@ -1,0 +1,110 @@
+<!--  App Page-->
+<!DOCTYPE HTML>
+<!--
+	Astral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title> Floppy  </title>
+  <%= favicon_link_tag 'app.png'%>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_pack_tag 'formulario' %>
+  <%= csrf_meta_tags %>
+  <script src="https://kit.fontawesome.com/306a9a7b97.js" crossorigin="anonymous"></script>
+	</head>
+	<body class="is-preload home">
+		<!-- Wrapper-->
+			<div id="wrapper">
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Me -->
+							<article id="home" class="panel intro">
+								<header>
+									<% if model_signed_in? %>
+									<h1>Welcome <%= current_model.email %></h1>
+									<%= link_to "Log out", destroy_model_session_path, method: :delete %>
+									<% else%>
+									<h1> <i class="fas fa-route"></i></h1>
+									<p> A Tool For Admnistrate Your Resources To Achieve Travel Goals.</p>
+									<% end %>
+								</header>
+								<div class="app icon">
+									
+									
+									<%= image_tag("app.png", :alt => "rss feed") %>
+
+								</div>
+							</article>
+						<!-- info -->
+						<article id="info" class="panel card  card-cool">
+						<section>
+						 <p> Make monthly savings. To Finance Your Trips.</p>
+						</section>
+								
+						</article>
+						<!-- Contact -->
+						    
+							<article id="login" class="panel  card card-cool">
+								<header>
+									<h2>Sign Up / Log In </h2>
+								</header>
+								<%if !model_signed_in? %>
+								
+								<%= yield %>
+								<%else%>
+								<%= link_to "Sign out", destroy_model_session_path, :method => :delete %>
+								<%end%>
+							</article>
+							
+						<!-- New Trip section -->
+						<article id="app" class="panel">
+								<header>
+									<%= yield %>
+								</header>
+								
+						</article>
+
+					</div>
+
+				<!-- Footer -->
+					<div id="footer">
+						<ul class="copyright">
+							<a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px" href="https://unsplash.com/@guilhermestecanella?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Guilherme Stecanella"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-2px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Guilherme Stecanella</span></a>
+							<li>&copy; Made with  <i style="color:red" class="fas fa-heart"></i> by Hèctor Jacales </li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+					<!-- Nav -->
+					<nav id="nav">
+					    <h1>Floppy</h1>
+						<a href="/" class="icon solid fa-home"><i class="fas fa-home"></i></a>
+						
+						<% if !model_signed_in? %>
+							<a href="#login" class="icon solid fa-envelope"> <i class="fas fa-sign-in-alt"></i> </a>
+						<% else %>
+						    <a href="#app" class="icon solid fa-envelope"> <i class="fas fa-plane-departure"></i></a>
+						<% end %>
+					</nav>
+
+			</div>
+
+		<!-- Scripts -->
+      <%= javascript_include_tag 'jquery', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'util', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'main', 'data-turbolinks-track' => true %>
+
+	</body>
+	<style>
+	 .home {
+ 		 background-image: url(<%= asset_path 'home.jpg' %>)  !important;
+  		background-position: center !important;
+  		background-repeat: no-repeat !important;
+  		background-size: cover !important;
+  		color: #fff !important;
+ }
+<style>
+</html>

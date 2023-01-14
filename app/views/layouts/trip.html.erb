@@ -1,0 +1,200 @@
+<!--  App Page-->
+<!DOCTYPE HTML>
+<!--
+    RAILS_ENV=production bundle exec rake assets:precompile
+	Astral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title> Floppy </title>
+   <%= favicon_link_tag 'app.png'%>			
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_pack_tag 'formulario' %>
+  <%= csrf_meta_tags %>
+  <script src="https://kit.fontawesome.com/306a9a7b97.js" crossorigin="anonymous"></script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper-->
+			<div id="wrapper">
+		
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Me -->
+							<article id="home" class="panel intro">
+								<header>
+									<% if model_signed_in? %>
+									 <% if @user.nombre.nil? %>
+									 <div>
+									 <%= @user.email %>
+									 <a href="/models/edit#app"> <h1> Complete your profile </h1> </a>
+									 </div>
+									 <% else  %>
+									 	<h1>Welcome <%= @user.nombre %> | </h1> <h2>
+										 <%= @pais[0].iso3 %>
+										 </h2>
+									 <% end %>
+									<%= link_to  destroy_model_session_path, method: :delete,class: 'button-cool' do %>
+									 <i class="fas fa-sign-out-alt"></i>
+									<% end %>
+									<% else%>
+									<h1>Floppy</h1>
+									<p> A Tool To Admnistrate Your Resources To Archive Travel Goals.</p>
+									<% end %>
+								</header>
+								<a href="/models/edit#app" class="jumplink pic">
+									<i class="fas fa-angle-right"></i>
+									<% if model_signed_in? %>
+									<% if !@user.avatar.attached? %>
+										<%= image_tag("default_user-min.jpg", :alt => "rss feed") %>
+									<% else %>
+										<%= image_tag(@user.avatar, :alt => "rss feed") %>
+								    <% end %>									
+									<% else %>
+									<%= image_tag("icon.png", :alt => "rss feed") %>
+									<% end %>
+								</a>
+							</article>
+
+						<!-- Work -->
+							<article id="dashboard" class="panel">
+								<header>
+								     <% if model_signed_in?%>
+									 <h2>Your Trips!</h2>
+									 <p></p>
+									 <% if @user.model_visitums.empty?%>
+									 <p>You have not any trips <a class="button-cool" href="#new_trip"> Add New Trip </a></p>
+									 <% end %>
+									 <div class="row">
+									 <% for viaje in  @user.model_visitums %>
+									 <div class="col-8 col-8-medium col-12-small card-cool card">
+									     <% if !viaje.lugar.image_place.attached? %>
+									     <%= link_to image_tag("wait-min.jpg", :alt => "rss feed"), dashboard_dashboard_path()+"?viaje=#{viaje.id}#new_trip", class: "image fit"  %>
+										 <div class="card-panel">
+										  <%= link_to dashboard_dashboard_path()+"?viaje=#{viaje.id}#new_trip",class: 'visit-button' do %>
+										   <i class="fas fa-eye"></i>
+										  <% end%>
+										  <%= link_to  edit_model_visitum_path(viaje)+"#new_trip", class: 'edit-button' do %>
+										  <i class="fas fa-edit"></i>
+										  <% end %>
+										  									 
+										</div>
+										 <% else %>
+										    <% if viaje.status.nil? %>
+										 	<%= link_to image_tag(viaje.lugar.image_place), dashboard_dashboard_path()+"?viaje=#{viaje.id}#new_trip", class: "image fit"%>
+											<% else %>
+											<%= link_to image_tag(viaje.lugar.image_place), dashboard_dashboard_path()+"?viaje=#{viaje.id}#new_trip", class: "image fit gray"%>
+											<% end %>
+										 <div class="card-panel">
+										  <%= link_to dashboard_dashboard_path()+"?viaje=#{viaje.id}#new_trip",class: 'visit-button' do %>
+										   <i class="fas fa-eye"></i>
+										  <% end%>
+										  <%= link_to  edit_model_visitum_path(viaje)+"#new_trip", class: 'edit-button' do %>
+										  <i class="fas fa-edit"></i>
+										  <% end %>
+										  									 
+										</div>
+										 <% end %>
+										 
+										 <div class="info">
+										 <% if !viaje.status.nil? %>
+										   <p style="color:#000"> This trip has been booked</p>
+										   <% end %>
+										 <h2><%= link_to viaje.lugar.nombre ,edit_lugar_path(viaje.lugar)+"#new_trip" %></br></h2> 
+											 Date: 	<%= link_to viaje.datetravel , edit_model_visitum_path(viaje)+"#new_trip"  %>
+										<div id="tag">
+										<% if viaje.lugar.id_pais == @user.pais%>
+										 <b class="local">Local/National <i class="fas fa-flag"></i></b>
+										 <% else %>
+										 <b class="international">International <i class="fas fa-globe-europe"></i></b>
+										 <% end %>
+										</div>
+										
+										 </div>
+										 
+									 </div>
+									 <% end %>
+									 </div>
+									 <% else %>
+									<h2>App </h2>
+									<% end %>
+								</header>
+								<p>
+									
+								</p>
+								<section>
+									<% if model_signed_in?%>
+									
+									<% else %>
+									<div class="row">
+										<div class="col-6 col-6-medium col-12-small">
+											<a href="#" class="image fit"><%= image_tag("money-min.jpg", :alt => "rss feed") %></a>
+										</div>
+										<p><h4> Save Money , Plan Your Trip , Make it Real!  </h4>
+                                        </p>
+										<p> This is a tool to schedule your trips. Based on price of planes, hotels
+										and documentation needed to travel. Yo can calculate and monitorite your saves,
+										to make those trips somethin real. 
+										</p>
+									<% end %>
+								</section>
+							</article>
+
+						<!-- Contact -->
+						
+							<article id="contact" class="panel">
+								<header>
+									<h2>Sign Up / Log In </h2>
+								</header>
+								<%if !model_signed_in? %>
+								<a href="/models/sign_in"><input type="submit" value ="Login"></a>
+								<a href="/models/sign_up"><input type="submit" value ="Sign up"></a>
+								<%else%>
+								<%= link_to "Sign out", destroy_model_session_path, :method => :delete %>
+								<%end%>
+							</article>
+						<!-- New Trip section -->
+						<article id="new_trip" class="panel">
+								<header>
+									<h2> Add New Trip  </h2>
+									<p></p>
+									<a class="button-cool" href="/lugars/new#new_trip" class="cool-button"> New Arrival Place <i class="fas fa-map-marker-alt"></i> </a>
+									<a class="button-cool" href="/model_visita/new#new_trip" class="cool-button">  Plan New Tripp <i class="fas fa-money-check-alt"></i></a>
+									<%= yield %>
+								</header>
+								
+						</article>
+
+					</div>
+
+				<!-- Footer -->
+					<div id="footer" class="black">
+						<ul class="copyright">
+							<li>&copy; Made with  <i style="color:red" class="fas fa-heart"></i> by Hèctor Jacales </li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+				<!-- Nav -->
+					<nav id="nav">
+						<a href="/#" class="icon solid fa-home"><i class="fas fa-home"></i></a>
+						<a href="/#dashboard" class="icon solid fa-folder"><i class="fas fa-briefcase"></i></a>
+						<% if !model_signed_in? %>
+							<a href="#contact" class="icon solid fa-envelope"> <i class="fas fa-sign-in-alt"></i> </a>
+						<% else %>
+						    <a href="#new_trip" class="icon solid fa-envelope"> <i class="fas fa-plane-departure"></i></a>
+						<% end %>
+					</nav>	
+
+			</div>
+
+		<!-- Scripts -->
+      <%= javascript_include_tag 'jquery', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'util', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'main', 'data-turbolinks-track' => true %>
+
+	</body>
+</html>

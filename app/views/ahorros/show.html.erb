@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id viaje:</strong>
+  <%= @ahorro.id_viaje %>
+</p>
+
+<p>
+  <strong>Fecha deposito:</strong>
+  <%= @ahorro.fecha_deposito %>
+</p>
+
+<p>
+  <strong>Numero depostio:</strong>
+  <%= @ahorro.numero_depostio %>
+</p>
+
+<%= link_to 'Edit', edit_ahorro_path(@ahorro) %> |
+<%= link_to 'Back', ahorros_path %>
